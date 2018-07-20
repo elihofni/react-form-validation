@@ -1,4 +1,4 @@
-import { map, zip, head, forEach, last } from "lodash-fp";
+import { map, zip, head, forEach, last, zipObject } from "lodash-fp";
 
 const validator = {
   bundle: [],
