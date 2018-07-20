@@ -1,4 +1,4 @@
-import { map, zip, head, forEach } from "lodash-fp";
+import { map, zip, head, forEach, last } from "lodash-fp";
 
 const validator = {
   bundle: [],
@@ -31,8 +31,19 @@ const validator = {
   },
 
   makeTests(bundle) {
-    // TODO: fazer as validações aqui....
-    console.log(bundle);
+    forEach(([tests, data]) => {
+      const validators = last(tests);
+      const [key, value] = data;
+
+      forEach(validator => {
+        const pass = validator.performTest(value);
+        if (!pass) {
+          this.messages.push({
+            [key]: validator.instructions
+          });
+        }
+      })(validators);
+    })(bundle);
   },
 
   verifyKeys(bundle) {
