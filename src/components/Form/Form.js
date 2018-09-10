@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   Firstname,
   Age,
   Lastname,
   Email,
   Password,
-  Button
-} from "./subcomponents";
+  Button,
+} from './subcomponents';
 
 const Form = props => {
   const { firstname, lastname, age, email, password, errors } = props.value;

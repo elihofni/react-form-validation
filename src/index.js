@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import Form from "./components/Form/Form";
-import validator from "./components/validator/validator";
-import rules from "./components/validator/rules";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Form from './components/Form/Form';
+import validator from './components/validator/validator';
+import rules from './components/validator/rules';
 
 const validationConfig = {
   firstname: [rules.isNonEmpty],
   lastname: [rules.isNonEmpty],
   email: [rules.isNonEmpty, rules.isEmail],
   age: [rules.isNonEmpty, rules.isNumber],
-  password: [rules.isNonEmpty, rules.isAlphaNum]
+  password: [rules.isNonEmpty, rules.isAlphaNum],
 };
 
 const initialState = {
   form: {
-    firstname: "",
-    lastname: "",
-    email: "",
-    age: "",
-    password: ""
+    firstname: '',
+    lastname: '',
+    email: '',
+    age: '',
+    password: '',
   },
-  errors: {}
+  errors: {},
 };
 
 class App extends Component {
@@ -38,8 +38,8 @@ class App extends Component {
     this.setState(prevState => ({
       form: {
         ...prevState.form,
-        [name]: value
-      }
+        [name]: value,
+      },
     }));
   }
 
@@ -53,9 +53,6 @@ class App extends Component {
     validator.validate(validationConfig, this.state.form);
     if (validator.hasErrors()) {
       console.log(validator.messages);
-      // this.setState(prevState => ({
-      //   errors: validator.errors
-      // }));
     }
   }
 
@@ -75,4 +72,4 @@ class App extends Component {
   }
 }
 
-render(<App />, document.getElementById("root"));
+render(<App />, document.getElementById('root'));

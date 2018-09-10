@@ -1,4 +1,4 @@
-import { map, zip, head, forEach, last } from "lodash-fp";
+import { map, zip, head, forEach, last } from 'lodash-fp';
 
 const validator = {
   bundle: [],
@@ -39,7 +39,7 @@ const validator = {
         const pass = validator.performTest(value);
         if (!pass) {
           this.messages.push({
-            [key]: validator.instructions
+            [key]: validator.instructions,
           });
         }
       })(validators);
@@ -67,7 +67,7 @@ const validator = {
 
   hasErrors() {
     return this.messages.length !== 0;
-  }
+  },
 };
 
 export default validator;
