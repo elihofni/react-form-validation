@@ -13,6 +13,11 @@ const validator = {
     this.setData(tests, data);
     this.verifyKeys(this.bundle);
     this.makeTests(this.bundle);
+    this.makeErrorsObject(this.messages);
+    return {
+      errors: this.errors,
+      hasErrors: this.hasErrors(),
+    };
   },
 
   reset() {
@@ -28,22 +33,6 @@ const validator = {
     this.data = Object.entries(data);
     this.tests = Object.entries(tests);
     this.bundle = zip(this.data, this.tests);
-  },
-
-  makeTests(bundle) {
-    forEach(([tests, data]) => {
-      const validators = last(tests);
-      const [key, value] = data;
-
-      forEach(validator => {
-        const pass = validator.performTest(value);
-        if (!pass) {
-          this.messages.push({
-            [key]: validator.instructions,
-          });
-        }
-      })(validators);
-    })(bundle);
   },
 
   verifyKeys(bundle) {
@@ -63,6 +52,34 @@ const validator = {
         );
       }
     })(results);
+  },
+
+  makeTests(bundle) {
+    forEach(([tests, data]) => {
+      const validators = last(tests);
+      const [key, value] = data;
+
+      forEach(validator => {
+        const pass = validator.performTest(value);
+        if (!pass) {
+          this.messages.push({
+            [key]: validator.instructions,
+          });
+        }
+      })(validators);
+    })(bundle);
+  },
+
+  makeErrorsObject(messages) {
+    this.errors = messages.reduce((tally, obj) => {
+      const [[key, message]] = Object.entries(obj);
+      if (!tally[key]) {
+        tally[key] = [message];
+      } else {
+        tally[key] = [...tally[key], message];
+      }
+      return tally;
+    }, {});
   },
 
   hasErrors() {
