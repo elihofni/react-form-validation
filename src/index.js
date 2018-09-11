@@ -45,7 +45,7 @@ class App extends Component {
 
   onReset(e) {
     e.preventDefault();
-    this.setState(prevState => initialState);
+    this.setState(() => initialState);
   }
 
   onSubmit(e) {
