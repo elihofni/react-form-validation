@@ -9,27 +9,30 @@ import {
 } from './subcomponents';
 
 const Form = props => {
-  const { firstname, lastname, age, email, password, errors } = props.value;
+  const {
+    value: { firstname, lastname, age, email, password },
+    errors,
+  } = props;
   return (
     <form>
       <Firstname
-        firstname={firstname}
+        value={firstname}
         onChangeInput={props.onChangeInput}
         errors={errors}
       />
       <Lastname
-        lastname={lastname}
+        value={lastname}
         onChangeInput={props.onChangeInput}
         errors={errors}
       />
       <Email
-        email={email}
+        value={email}
         onChangeInput={props.onChangeInput}
         errors={errors}
       />
-      <Age age={age} onChangeInput={props.onChangeInput} errors={errors} />
+      <Age value={age} onChangeInput={props.onChangeInput} errors={errors} />
       <Password
-        password={password}
+        value={password}
         onChangeInput={props.onChangeInput}
         errors={errors}
       />

@@ -1,13 +1,10 @@
 import React from 'react';
+import { Error } from './Error';
 
-export const Lastname = props => (
+export const Lastname = ({ value, onChangeInput, errors }) => (
   <p>
     <label>Sobrenome:</label>
-    <input
-      value={props.lastname}
-      type="text"
-      name="lastname"
-      onChange={props.onChangeInput}
-    />
+    <input value={value} type="text" name="lastname" onChange={onChangeInput} />
+    {errors['lastname'] && <Error>{errors['lastname']}</Error>}
   </p>
 );

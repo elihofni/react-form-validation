@@ -66,7 +66,7 @@ class App extends Component {
           onChangeInput={this.onChangeInput}
           onReset={this.onReset}
           onSubmit={this.onSubmit}
-          validation={this.validation}
+          errors={this.state.errors}
         />
       </React.Fragment>
     );

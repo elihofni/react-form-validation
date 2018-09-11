@@ -1,13 +1,15 @@
 import React from 'react';
+import { Error } from './Error';
 
-export const Password = props => (
+export const Password = ({ value, onChangeInput, errors }) => (
   <p>
     <label>Password:</label>
     <input
-      value={props.password}
+      value={value}
       type="password"
       name="password"
-      onChange={props.onChangeInput}
+      onChange={onChangeInput}
     />
+    {errors['password'] && <Error>{errors['password']}</Error>}
   </p>
 );
