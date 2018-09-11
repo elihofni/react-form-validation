@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Form from './components/Form/Form';
-import validator from './components/validator/validator';
+import validate from './components/validator/validate';
 import rules from './components/validator/rules';
 
 const validationConfig = {
@@ -50,7 +50,7 @@ class App extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const validation = validator.validate(validationConfig, this.state.form);
+    const validation = validate(validationConfig, this.state.form);
     this.setState(prevState => ({
       ...prevState,
       errors: validation.errors,

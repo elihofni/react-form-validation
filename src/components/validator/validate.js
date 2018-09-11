@@ -1,48 +1,44 @@
 import { map, zip, head, forEach, last } from 'lodash-fp';
 
-const validator = {
-  bundle: [],
-  data: [],
-  errors: {},
-  messages: [],
-  tests: [],
-  keys: [],
+const validate = (config, form) => {
+  let bundle = [],
+    data = [],
+    errors = {},
+    messages = [],
+    tests = [];
 
-  validate(tests, data) {
-    this.reset();
-    this.setData(tests, data);
-    this.verifyKeys(this.bundle);
-    this.makeTests(this.bundle);
-    this.makeErrorsObject(this.messages);
+  const init = (config, form) => {
+    reset();
+    setData(config, form);
+    verifyKeys(bundle);
+    makeTests(bundle);
+    makeErrorsObject(messages);
     return {
-      errors: this.errors,
-      hasErrors: this.hasErrors(),
+      errors,
+      hasErrors: hasErrors(),
     };
-  },
+  };
 
-  reset() {
-    this.bundle = [];
-    this.data = {};
-    this.errors = {};
-    this.keys = [];
-    this.messages = [];
-    this.tests = [];
-  },
+  const reset = () => {
+    bundle = [];
+    data = [];
+    errors = {};
+    messages = [];
+    tests = [];
+  };
 
-  setData(tests, data) {
-    this.data = Object.entries(data);
-    this.tests = Object.entries(tests);
-    this.bundle = zip(this.data, this.tests);
-  },
+  const setData = (config, form) => {
+    tests = Object.entries(config);
+    data = Object.entries(form);
+    bundle = zip(data, tests);
+  };
 
-  verifyKeys(bundle) {
+  const verifyKeys = bundle => {
     const results = map(([tests, data]) => {
       const testKey = head(tests);
       const dataKey = head(data);
       return [testKey, dataKey, testKey === dataKey];
     })(bundle);
-
-    this.keys = results;
 
     forEach(result => {
       const [testKey, dataKey, areEqual] = result;
@@ -52,9 +48,9 @@ const validator = {
         );
       }
     })(results);
-  },
+  };
 
-  makeTests(bundle) {
+  const makeTests = bundle => {
     forEach(([tests, data]) => {
       const validators = last(tests);
       const [key, value] = data;
@@ -62,16 +58,16 @@ const validator = {
       forEach(validator => {
         const pass = validator.performTest(value);
         if (!pass) {
-          this.messages.push({
+          messages.push({
             [key]: validator.instructions,
           });
         }
       })(validators);
     })(bundle);
-  },
+  };
 
-  makeErrorsObject(messages) {
-    this.errors = messages.reduce((tally, obj) => {
+  const makeErrorsObject = messages => {
+    errors = messages.reduce((tally, obj) => {
       const [[key, message]] = Object.entries(obj);
       if (!tally[key]) {
         tally[key] = [message];
@@ -80,11 +76,13 @@ const validator = {
       }
       return tally;
     }, {});
-  },
+  };
 
-  hasErrors() {
-    return this.messages.length !== 0;
-  },
+  const hasErrors = () => {
+    return messages.length !== 0;
+  };
+
+  return init(config, form);
 };
 
-export default validator;
+export default validate;
