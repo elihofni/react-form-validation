@@ -44,9 +44,10 @@ const validate = (config, form) => {
     forEach(([tests, data]) => {
       const validators = last(tests);
       const [key, value] = data;
+      const trimmedValue = value.trim();
 
       forEach(validator => {
-        const pass = validator.performTest(value);
+        const pass = validator.performTest(trimmedValue);
         if (!pass) {
           messages.push({
             [key]: validator.instructions,
