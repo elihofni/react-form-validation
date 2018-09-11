@@ -16,7 +16,6 @@ const rules = {
 
   isPassword: {
     performTest(value) {
-      // return !/[^a-z0-9]/i.test(value);
       return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i.test(value);
     },
     instructions:
