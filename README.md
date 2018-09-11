@@ -43,7 +43,7 @@ this.state = {
 Para validar este formulário, a primeira coisa a ser feita é estabeler quais serão as regras de validação para cada um dos campos. Com isso em mente, criaremos um `configObject` no qual cada uma das chaves de validação deve conter um array com nenhuma, uma ou mais regras:
 
 ```jsx
-import rules from './components/validator/rules';
+import rules from './validator/rules';
 
 const configObject = {
   firstname: [rules.isNonEmpty],
@@ -57,7 +57,7 @@ const configObject = {
 Em seguida, basta invocarmos a função `validate` como o objeto de configuração e o formulário a ser validado:
 
 ```js
-import validate from './components/validator/validate';
+import validate from './validator/validate';
 
 const validationObject = validate(configObject, this.state.form);
 ```

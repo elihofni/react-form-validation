@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 import Form from './components/Form/Form';
-import validate from './components/validator/validate';
-import rules from './components/validator/rules';
+import validate from './validator/validate';
+import rules from './validator/rules';
 
 const validateConfig = {
   firstname: [rules.isNonEmpty],
