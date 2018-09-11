@@ -16,9 +16,11 @@ const rules = {
 
   isAlphaNum: {
     performTest(value) {
-      return !/[^a-z0-9]/i.test(value);
+      // return !/[^a-z0-9]/i.test(value);
+      return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i.test(value);
     },
-    instructions: 'Este campo não pode ter símbolos especiais.',
+    instructions:
+      'Deve conter 8 caracteres no mínimo, sendo pelo menos um maiúsculo, um minúsculo e um número.',
   },
 
   isEmail: {
