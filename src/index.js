@@ -51,12 +51,10 @@ class App extends Component {
   onSubmit(e) {
     e.preventDefault();
     const validation = validator.validate(validationConfig, this.state.form);
-    if (validation.hasErrors) {
-      this.setState(prevState => ({
-        ...prevState,
-        errors: validation.errors,
-      }));
-    }
+    this.setState(prevState => ({
+      ...prevState,
+      errors: validation.errors,
+    }));
   }
 
   render() {
