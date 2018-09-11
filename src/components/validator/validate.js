@@ -2,34 +2,24 @@ import { map, zip, head, forEach, last } from 'lodash-fp';
 
 const validate = (config, form) => {
   let bundle = [],
-    data = [],
     errors = {},
-    messages = [],
-    tests = [];
+    messages = [];
 
   const init = (config, form) => {
-    reset();
-    setData(config, form);
+    makeBundle(config, form);
     verifyKeys(bundle);
     makeTests(bundle);
     makeErrorsObject(messages);
     return {
       errors,
       hasErrors: hasErrors(),
+      length: messages.length,
     };
   };
 
-  const reset = () => {
-    bundle = [];
-    data = [];
-    errors = {};
-    messages = [];
-    tests = [];
-  };
-
-  const setData = (config, form) => {
-    tests = Object.entries(config).sort((a, b) => head(a) > head(b));
-    data = Object.entries(form).sort((a, b) => head(a) > head(b));
+  const makeBundle = (config, form) => {
+    const tests = Object.entries(config).sort((a, b) => head(a) > head(b));
+    const data = Object.entries(form).sort((a, b) => head(a) > head(b));
     bundle = zip(data, tests);
   };
 
