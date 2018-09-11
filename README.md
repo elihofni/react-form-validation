@@ -10,7 +10,7 @@ O padrão de design utilizado para a implementação dessa funcionalidade é cha
 
 ### API
 
-Eis como faremos as nossas validações. Invocaremos uma função chamada `validade` com dois argumentos: um objeto de configuração (`configObject`) e os dados que gostaríamos de validar (`state`). O resultado da função é um objeto de validação com as mensagens e a quantidade de erros (`validationObject`).
+Eis como faremos as nossas validações. Invocaremos uma função chamada `validate` com dois argumentos: um objeto de configuração (`configObject`) e os dados que gostaríamos de validar (`state`). O resultado da função é um objeto de validação com as mensagens e a quantidade de erros (`validationObject`).
 
 ```js
 validate(config: configObject, form: state): validationObject
