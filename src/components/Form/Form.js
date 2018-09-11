@@ -1,40 +1,52 @@
 import React from 'react';
-import {
-  Firstname,
-  Age,
-  Lastname,
-  Email,
-  Password,
-  Button,
-} from './subcomponents';
+import { Button, CustomInput } from './subcomponents';
 
 const Form = props => {
   const {
-    value: { firstname, lastname, age, email, password },
+    values: { firstname, lastname, age, email, password },
     errors,
   } = props;
   return (
     <form>
-      <Firstname
+      <CustomInput
+        errors={errors}
+        label="Nome:"
+        name="firstname"
+        onChangeInput={props.onChangeInput}
+        type="text"
         value={firstname}
-        onChangeInput={props.onChangeInput}
-        errors={errors}
       />
-      <Lastname
+      <CustomInput
+        errors={errors}
+        label="Sobrenome:"
+        name="lastname"
+        onChangeInput={props.onChangeInput}
+        type="text"
         value={lastname}
-        onChangeInput={props.onChangeInput}
-        errors={errors}
       />
-      <Email
+      <CustomInput
+        errors={errors}
+        label="Email:"
+        name="email"
+        onChangeInput={props.onChangeInput}
+        type="email"
         value={email}
-        onChangeInput={props.onChangeInput}
-        errors={errors}
       />
-      <Age value={age} onChangeInput={props.onChangeInput} errors={errors} />
-      <Password
-        value={password}
-        onChangeInput={props.onChangeInput}
+      <CustomInput
         errors={errors}
+        label="Idade:"
+        name="age"
+        onChangeInput={props.onChangeInput}
+        type="number"
+        value={age}
+      />
+      <CustomInput
+        errors={errors}
+        label="Senha:"
+        name="password"
+        onChangeInput={props.onChangeInput}
+        type="password"
+        value={password}
       />
       <Button onClick={props.onSubmit}>Validar</Button>
       <Button onClick={props.onReset}>Resetar</Button>

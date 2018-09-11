@@ -62,7 +62,7 @@ class App extends Component {
       <React.Fragment>
         <h1>Validação de Formulários para o GCN</h1>
         <Form
-          value={this.state.form}
+          values={this.state.form}
           onChangeInput={this.onChangeInput}
           onReset={this.onReset}
           onSubmit={this.onSubmit}
