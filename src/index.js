@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 import Form from './components/Form/Form';
 import validate from './components/validator/validate';
 import rules from './components/validator/rules';
 
-const validationConfig = {
+const validateConfig = {
   firstname: [rules.isNonEmpty],
   lastname: [rules.isNonEmpty],
   email: [rules.isNonEmpty, rules.isEmail],
@@ -50,7 +50,7 @@ class App extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const validation = validate(validationConfig, this.state.form);
+    const validation = validate(validateConfig, this.state.form);
     this.setState(prevState => ({
       ...prevState,
       errors: validation.errors,
@@ -59,7 +59,7 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         <h1>Validação de Formulários para o GCN</h1>
         <Form
           values={this.state.form}
@@ -68,7 +68,7 @@ class App extends Component {
           onSubmit={this.onSubmit}
           errors={this.state.errors}
         />
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
