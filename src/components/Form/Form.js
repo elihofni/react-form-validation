@@ -7,7 +7,7 @@ const Form = props => {
     errors,
   } = props;
   return (
-    <form>
+    <form onSubmit={props.onSubmit}>
       <CustomInput
         errors={errors}
         label="Nome:"
@@ -48,7 +48,7 @@ const Form = props => {
         type="password"
         value={password}
       />
-      <Button onClick={props.onSubmit}>Validar</Button>
+      <Button onClick="submit">Validar</Button>
       <Button onClick={props.onReset}>Resetar</Button>
     </form>
   );
