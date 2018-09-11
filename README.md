@@ -1,6 +1,6 @@
-#Validação de Formulários
+# Validação de Formulários
 
-###Motivação
+### Motivação
 
 Boa parte da complexidade de uma aplicação em React envolve a implementação das regras de validação de formulários. Como o objetivo de facilitar a lógica envolvida nesta implementação, apresento aqui uma nova forma de realizá-la.
 
@@ -16,7 +16,7 @@ Eis como faremos as nossas validações. Invocaremos uma função chamada `valid
 validate(config: configObject, form: state): validationObject
 ```
 
-###Exemplo
+### Exemplo
 
 Temos um formulário com os seguintes campos:
 
@@ -95,6 +95,7 @@ Para finalizar, basta representar os resultados no estado ou enviá-los para uma
 
 ```jsx
 onSubmit(e) {
+### Testes
   e.preventDefault();
   const validation = validate(validateConfig, this.state.form);
 
@@ -109,7 +110,7 @@ onSubmit(e) {
 }
 ```
 
-###Estabelecendo as Regras
+### Estabelecendo as Regras
 
 O conjuto de regras deve ser um objeto em que cada regra é representada por uma propriedade. Por sua vez, cada regra deve ser um objeto com um método chamado `performTest` e uma propriedade chamada `instructions`:
 
