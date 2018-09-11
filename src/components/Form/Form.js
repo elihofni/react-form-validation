@@ -1,55 +1,57 @@
 import React from 'react';
 import { Button, CustomInput } from './subcomponents';
 
-const Form = props => {
-  const {
-    values: { firstname, lastname, age, email, password },
+const Form = ({
+  values: { firstname, lastname, age, email, password },
+  errors,
+  onSubmit,
+  onChangeInput,
+  onReset,
+}) => {
+  const inputPropCollection = {
+    onChangeInput,
     errors,
-  } = props;
+  };
+
   return (
-    <form onSubmit={props.onSubmit}>
+    <form onSubmit={onSubmit}>
       <CustomInput
-        errors={errors}
         label="Nome:"
         name="firstname"
-        onChangeInput={props.onChangeInput}
         type="text"
         value={firstname}
+        {...inputPropCollection}
       />
       <CustomInput
-        errors={errors}
         label="Sobrenome:"
         name="lastname"
-        onChangeInput={props.onChangeInput}
         type="text"
         value={lastname}
+        {...inputPropCollection}
       />
       <CustomInput
-        errors={errors}
         label="Email:"
         name="email"
-        onChangeInput={props.onChangeInput}
         type="email"
         value={email}
+        {...inputPropCollection}
       />
       <CustomInput
-        errors={errors}
         label="Idade:"
         name="age"
-        onChangeInput={props.onChangeInput}
         type="number"
         value={age}
+        {...inputPropCollection}
       />
       <CustomInput
-        errors={errors}
         label="Senha:"
         name="password"
-        onChangeInput={props.onChangeInput}
         type="password"
         value={password}
+        {...inputPropCollection}
       />
-      <Button onClick="submit">Validar</Button>
-      <Button onClick={props.onReset}>Resetar</Button>
+      <Button onClick={onSubmit}>Validar</Button>
+      <Button onClick={onReset}>Resetar</Button>
     </form>
   );
 };
