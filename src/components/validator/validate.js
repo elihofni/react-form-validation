@@ -28,8 +28,8 @@ const validate = (config, form) => {
   };
 
   const setData = (config, form) => {
-    tests = Object.entries(config);
-    data = Object.entries(form);
+    tests = Object.entries(config).sort((a, b) => head(a) > head(b));
+    data = Object.entries(form).sort((a, b) => head(a) > head(b));
     bundle = zip(data, tests);
   };
 
