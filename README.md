@@ -95,7 +95,6 @@ Para finalizar, basta representar os resultados no estado ou enviá-los para uma
 
 ```jsx
 onSubmit(e) {
-### Testes
   e.preventDefault();
   const validation = validate(validateConfig, this.state.form);
 
