@@ -126,4 +126,4 @@ const rules = {
 };
 ```
 
-Diversas regras podem ser criadas de acordo com a necessidade. O importante é que cada uma delas deve testar apenas uma coisa. Para aplicar múltiplas regras de validação para um determinado campo, basta concatená-las em uma array no `configObject`. Ex: `password: [rules.isNonEmpty, rules.isPassword, ...more.rules]`
+Diversas regras podem ser criadas de acordo com a necessidade. O importante é que cada uma delas deve testar apenas uma coisa. Para aplicar múltiplas regras de validação para um determinado campo, basta concatená-las em um array no `configObject`. Ex: `password: [rules.isNonEmpty, rules.isPassword, ...more.rules]`
