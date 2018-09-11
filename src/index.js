@@ -9,7 +9,7 @@ const validationConfig = {
   lastname: [rules.isNonEmpty],
   email: [rules.isNonEmpty, rules.isEmail],
   age: [rules.isNonEmpty, rules.isNumber],
-  password: [rules.isNonEmpty, rules.isAlphaNum],
+  password: [rules.isNonEmpty, rules.isPassword],
 };
 
 const initialState = {
