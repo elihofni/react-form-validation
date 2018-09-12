@@ -1,28 +1,15 @@
-import { zip, head, forEach, last } from 'lodash-fp';
+import { zip, head, forEach, last, flow } from 'lodash-fp';
 
 const validate = (config, form) => {
-  let bundle = [],
-    errors = {},
-    messages = [];
-
-  const init = (config, form) => {
-    makeBundle(config, form);
-    verifyKeys(bundle);
-    performTests(bundle);
-    buildErrorsObject(messages);
-    return {
-      errors,
-      hasErrors: hasErrors(),
-      length: messages.length,
-    };
-  };
-
+  // Zip together config and form data.
   const makeBundle = (config, form) => {
     const tests = Object.entries(config).sort((a, b) => head(a) > head(b));
     const data = Object.entries(form).sort((a, b) => head(a) > head(b));
-    bundle = zip(data, tests);
-  };
+    const bundle = zip(data, tests);
 
+    return bundle;
+  };
+  // Verify if the keys of the config object and the form are the same.
   const verifyKeys = bundle => {
     forEach(([tests, data]) => {
       const testKey = head(tests);
@@ -34,9 +21,13 @@ const validate = (config, form) => {
         );
       }
     })(bundle);
-  };
 
+    return bundle;
+  };
+  // Perform the tests for each field of the form and return a array of error messages.
   const performTests = bundle => {
+    const messages = [];
+
     forEach(([tests, data]) => {
       const validators = last(tests);
       const [key, value] = data;
@@ -51,10 +42,12 @@ const validate = (config, form) => {
         }
       })(validators);
     })(bundle);
-  };
 
+    return messages;
+  };
+  // Put together an errorObject
   const buildErrorsObject = messages => {
-    errors = messages.reduce((tally, obj) => {
+    const errors = messages.reduce((tally, obj) => {
       const [[key, message]] = Object.entries(obj);
       if (!tally[key]) {
         tally[key] = [message];
@@ -63,11 +56,20 @@ const validate = (config, form) => {
       }
       return tally;
     }, {});
+
+    return {
+      errors,
+      hasErrors: messages.length !== 0,
+      length: messages.length,
+    };
   };
-
-  const hasErrors = () => messages.length !== 0;
-
-  return init(config, form);
+  // Chain functions above, giving the output of the previous function as input to the next.
+  return flow(
+    makeBundle,
+    verifyKeys,
+    performTests,
+    buildErrorsObject
+  )(config, form);
 };
 
 export default validate;
