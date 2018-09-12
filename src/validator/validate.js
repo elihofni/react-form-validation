@@ -1,9 +1,9 @@
-import { zip, head, forEach, last, flow } from 'lodash-fp';
+import { zip, forEach, flow } from 'lodash-fp';
 
 const validate = (config, form) => {
   // Zip together config and form data.
   const makeBundle = (config, form) => {
-    const compareStrings = (a, b) => head(a).localeCompare(head(b));
+    const compareStrings = ([a], [b]) => a.localeCompare(b);
     const tests = Object.entries(config).sort(compareStrings);
     const data = Object.entries(form).sort(compareStrings);
     const bundle = zip(data, tests);
@@ -12,9 +12,7 @@ const validate = (config, form) => {
   };
   // Verify if the keys of the config object and the form are the same.
   const verifyKeys = bundle => {
-    forEach(([tests, data]) => {
-      const testKey = head(tests);
-      const dataKey = head(data);
+    forEach(([[testKey], [dataKey]]) => {
       const areEqual = testKey === dataKey;
       if (!areEqual) {
         throw new Error(
@@ -29,16 +27,14 @@ const validate = (config, form) => {
   const performTests = bundle => {
     const messages = [];
 
-    forEach(([tests, data]) => {
-      const validators = last(tests);
-      const [key, value] = data;
-      const trimmedValue = value.trim();
+    forEach(([[_, validators], [dataKey, dataValue]]) => {
+      const trimmedValue = dataValue.trim();
 
       forEach(validator => {
         const pass = validator.performTest(trimmedValue);
         if (!pass) {
           messages.push({
-            [key]: validator.instructions,
+            [dataKey]: validator.instructions,
           });
         }
       })(validators);
