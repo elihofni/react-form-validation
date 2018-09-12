@@ -1,4 +1,4 @@
-import { map, zip, head, forEach, last } from 'lodash-fp';
+import { zip, head, forEach, last } from 'lodash-fp';
 
 const validate = (config, form) => {
   let bundle = [],
@@ -8,8 +8,8 @@ const validate = (config, form) => {
   const init = (config, form) => {
     makeBundle(config, form);
     verifyKeys(bundle);
-    makeTests(bundle);
-    makeErrorsObject(messages);
+    performTests(bundle);
+    buildErrorsObject(messages);
     return {
       errors,
       hasErrors: hasErrors(),
@@ -24,23 +24,19 @@ const validate = (config, form) => {
   };
 
   const verifyKeys = bundle => {
-    const results = map(([tests, data]) => {
+    forEach(([tests, data]) => {
       const testKey = head(tests);
       const dataKey = head(data);
-      return [testKey, dataKey, testKey === dataKey];
-    })(bundle);
-
-    forEach(result => {
-      const [testKey, dataKey, areEqual] = result;
+      const areEqual = testKey === dataKey;
       if (!areEqual) {
         throw new Error(
           `A propriedade do formulário >>${dataKey}<< e a propriedade do teste >>${testKey}<< não são as mesmas.`
         );
       }
-    })(results);
+    })(bundle);
   };
 
-  const makeTests = bundle => {
+  const performTests = bundle => {
     forEach(([tests, data]) => {
       const validators = last(tests);
       const [key, value] = data;
@@ -57,7 +53,7 @@ const validate = (config, form) => {
     })(bundle);
   };
 
-  const makeErrorsObject = messages => {
+  const buildErrorsObject = messages => {
     errors = messages.reduce((tally, obj) => {
       const [[key, message]] = Object.entries(obj);
       if (!tally[key]) {
@@ -69,9 +65,7 @@ const validate = (config, form) => {
     }, {});
   };
 
-  const hasErrors = () => {
-    return messages.length !== 0;
-  };
+  const hasErrors = () => messages.length !== 0;
 
   return init(config, form);
 };
