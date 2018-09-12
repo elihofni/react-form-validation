@@ -3,8 +3,9 @@ import { zip, head, forEach, last, flow } from 'lodash-fp';
 const validate = (config, form) => {
   // Zip together config and form data.
   const makeBundle = (config, form) => {
-    const tests = Object.entries(config).sort((a, b) => head(a) > head(b));
-    const data = Object.entries(form).sort((a, b) => head(a) > head(b));
+    const compareStrings = (a, b) => head(a).localeCompare(head(b));
+    const tests = Object.entries(config).sort(compareStrings);
+    const data = Object.entries(form).sort(compareStrings);
     const bundle = zip(data, tests);
 
     return bundle;
