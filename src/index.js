@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
+import ReactJson from 'react-json-view';
 import Form from './components/Form/Form';
 import validate from './validator/validate';
 import rules from './validator/rules';
@@ -21,6 +22,7 @@ const initialState = {
     password: '',
   },
   errors: {},
+  validation: {},
 };
 
 class App extends Component {
@@ -54,6 +56,7 @@ class App extends Component {
     this.setState(prevState => ({
       ...prevState,
       errors: validation.errors,
+      validation,
     }));
   }
 
@@ -67,6 +70,14 @@ class App extends Component {
           onReset={this.onReset}
           onSubmit={this.onSubmit}
           errors={this.state.errors}
+        />
+        <h3>Objeto de Validação</h3>
+        <ReactJson
+          src={this.state.validation}
+          name={false}
+          style={{ marginTop: '20px', padding: '20px' }}
+          indentWidth={2}
+          theme="monokai"
         />
       </Fragment>
     );
