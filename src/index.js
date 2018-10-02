@@ -21,8 +21,9 @@ const initialState = {
     age: '',
     password: '',
   },
-  errors: {},
-  validation: {},
+  errors: {
+    hasErrors: false,
+  },
 };
 
 class App extends Component {
@@ -52,12 +53,8 @@ class App extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const validation = validate(validateConfig, this.state.form);
-    this.setState(prevState => ({
-      ...prevState,
-      errors: validation.errors,
-      validation,
-    }));
+    const errors = validate(validateConfig, this.state.form);
+    this.setState(prevState => ({ ...prevState, errors }));
   }
 
   render() {
@@ -73,7 +70,7 @@ class App extends Component {
         />
         <h3>Objeto de Validação</h3>
         <ReactJson
-          src={this.state.validation}
+          src={this.state.errors}
           name={false}
           style={{ marginTop: '20px', padding: '20px' }}
           indentWidth={2}
